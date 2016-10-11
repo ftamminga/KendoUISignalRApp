@@ -1,0 +1,10 @@
+Debug
+Release
+bin
+obj
+*.bak
+*.tmp
+*.suo
+*.user
+*.webinfo
+*.InstallLog
