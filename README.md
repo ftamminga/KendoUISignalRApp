@@ -7,7 +7,7 @@ This is an example of a C# Asp.Net MVC5 application using a Telerik Kendo Grid t
 The example uses the same database as the Telerik example, to be found at https://github.com/telerik/ui-for-aspnet-mvc-examples/tree/master/grid/signalR-bound-grid
 You only have to change the connection string to a working database with the product samples.
 
-Parts of the application are functioning, but there are some nasty problems. These problems are exactly the same as in my own application (which is a good thing in my opinion)
+Parts of the application are functioning, but there are some nasty problems. 
 The SignalR part seems to work fine, but the filtering and sorting do not work as they should.
 
 The problems: (having the application running as duplicate on two seperate browser screens, 1 and 2)
