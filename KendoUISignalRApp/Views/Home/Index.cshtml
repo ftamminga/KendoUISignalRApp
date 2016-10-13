@@ -54,7 +54,7 @@
             notification.success(e.type);
             }
         </text>))
-        //.Sort(sort => sort.Add(s => s.ProductName).Ascending())
+        .Sort(sort => sort.Add(s => s.ProductName).Ascending())
         .ServerFiltering(true)
         .ServerPaging(true)
         .ServerSorting(true)
