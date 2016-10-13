@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KendoUISignalRApp.Models
 {
-    public class KendoDataSourceRequest
+    public class KendoDataSourceRequest 
     {
         public int Take { get; set; }
         public int Skip { get; set; }

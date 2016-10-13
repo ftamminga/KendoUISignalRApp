@@ -144,6 +144,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleDataContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SignalRClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
