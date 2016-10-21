@@ -11,14 +11,14 @@ using Task = System.Threading.Tasks.Task;
 namespace KendoUISignalRApp.Hubs
 
 {
-    public class ProductHub : Hub
+	public class ProductHub : Hub
     {
-        private ProductService productService;
+        private readonly ProductService _productService;
         private static readonly Dictionary<string, SignalRClient> HubClients = new Dictionary<string, SignalRClient>();
 
         public ProductHub()
         { 
-            productService = new ProductService(new SampleDataContext());
+            _productService = new ProductService(new SampleDataContext());
         }
 
         public DataSourceResult Read(KendoDataSourceRequest request)
@@ -27,9 +27,9 @@ namespace KendoUISignalRApp.Hubs
             {
                 CurrentClient().KendoDataSourceRequest = request;
 
-                var products = productService.Read();
+                var products = _productService.Read();
 
-                if (request.Sort == null || !request.Sort.Any())
+                if (request.Sort == null || !request.Sort.Any())    // Add default sorting
                 {
                     products = products.OrderBy(p => p.ProductName);
                 }
@@ -41,13 +41,13 @@ namespace KendoUISignalRApp.Hubs
             catch (Exception e)
             {
 
-                throw e;
+                throw;
             }
         }
 
         public void Update(ProductViewModel product)
         {
-            productService.Update(product);
+            _productService.Update(product);
 
             var hub = GlobalHost.ConnectionManager.GetHubContext<ProductHub>();
             var tempProdlist = new List<ProductViewModel> {product};
@@ -75,13 +75,13 @@ namespace KendoUISignalRApp.Hubs
 
         public void Destroy(ProductViewModel product)
         {
-            productService.Destroy(product);
+            _productService.Destroy(product);
             Clients.Others.destroy(new DataSourceResult { Data = new[] { product } });
         }
 
         public DataSourceResult Create(ProductViewModel product)
         {
-            productService.Create(product);
+            _productService.Create(product);
 
             var dataSourceResult = new DataSourceResult {Data = new[] {product}}; // For this client
 

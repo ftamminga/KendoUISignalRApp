@@ -10,9 +10,31 @@
     var hub = $.connection.productHub;
     var hubStart = $.connection.hub.start();
 
+    hub.client.rebind = function () {
+        var $grid = $("#Grid").data('kendoGrid');
+
+        if ($grid) $grid.dataSource.read();
+    }
+
     hub.client.showMessage = function (message) {
         console.log(message);
     }
+
+
+    ////////////////////////////////////////////////
+    function onPush(e) {
+        var notification = $("#notification").data("kendoNotification");
+        notification.success(e.type);
+
+        if(e.type === "create") {
+            // Sort grid programmatically
+            // http://www.telerik.com/forums/sorting-a-grid-programmatically
+            var $grid = $("#Grid").data("kendoGrid");
+            var dataSource = $grid.dataSource;
+            dataSource.sort(dataSource._sort);
+        }
+    }
+    
 </script>
 
 @(Html.Kendo().Notification()
@@ -48,12 +70,7 @@
     .DataSource(dataSource => dataSource
         .SignalR()
         .AutoSync(true)
-        .Events(events => events.Push(@<text>
-            function(e) {
-            var notification = $("#notification").data("kendoNotification");
-            notification.success(e.type);
-            }
-        </text>))
+        .Events(events => events.Push("onPush"))
         .Sort(sort => sort.Add(s => s.ProductName).Ascending())
         .ServerFiltering(true)
         .ServerPaging(true)

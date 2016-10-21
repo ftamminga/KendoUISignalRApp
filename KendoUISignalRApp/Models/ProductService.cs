@@ -21,8 +21,8 @@ namespace KendoUISignalRApp.Models
             {
                 ProductID = product.ProductId,
                 ProductName = product.ProductName,
-                UnitPrice = product.UnitPrice.HasValue ? product.UnitPrice.Value : default(decimal),
-                UnitsInStock = product.UnitsInStock.HasValue ? product.UnitsInStock.Value : default(short),
+                UnitPrice = product.UnitPrice ?? default(decimal),
+                UnitsInStock = product.UnitsInStock ?? default(short),
                 Discontinued = product.Discontinued
             });
             return retval;
@@ -30,12 +30,13 @@ namespace KendoUISignalRApp.Models
 
         public void Create(ProductViewModel product)
         {
-            var entity = new Product();
-
-            entity.ProductName = product.ProductName;
-            entity.UnitPrice = product.UnitPrice;
-            entity.UnitsInStock = (short)product.UnitsInStock;
-            entity.Discontinued = product.Discontinued;
+            var entity = new Product
+            {
+                ProductName = product.ProductName,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = (short) product.UnitsInStock,
+                Discontinued = product.Discontinued
+            };
 
             dataContext.Products.Add(entity);
             dataContext.SaveChanges();
@@ -45,13 +46,14 @@ namespace KendoUISignalRApp.Models
 
         public void Update(ProductViewModel product)
         {
-            var entity = new Product();
-
-            entity.ProductId = product.ProductID;
-            entity.ProductName = product.ProductName;
-            entity.UnitPrice = product.UnitPrice;
-            entity.UnitsInStock = (short)product.UnitsInStock;
-            entity.Discontinued = product.Discontinued;
+            var entity = new Product
+            {
+                ProductId = product.ProductID,
+                ProductName = product.ProductName,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = (short) product.UnitsInStock,
+                Discontinued = product.Discontinued
+            };
 
             dataContext.Products.Attach(entity);
             dataContext.Entry(entity).State = EntityState.Modified;
@@ -60,12 +62,9 @@ namespace KendoUISignalRApp.Models
 
         public void Destroy(ProductViewModel product)
         {
-            var entity = new Product();
-
-            entity.ProductId = product.ProductID;
+            var entity = new Product {ProductId = product.ProductID};
 
             dataContext.Products.Attach(entity);
-
             dataContext.Products.Remove(entity);
 
             var orderDetails = dataContext.OrderDetails.Where(pd => pd.ProductId == entity.ProductId);
