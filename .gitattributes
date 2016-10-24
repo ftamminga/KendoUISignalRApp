@@ -1,0 +1,3 @@
+*.rb linguist-language=C#
+lib/KENDOUIMVC/2016.3.914.545/* linguist-vendored
+KendoUISignalRApp/Scripts/kendo/* linguist-vendored
