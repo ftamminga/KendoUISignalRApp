@@ -6,36 +6,7 @@
 <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.1.min.js")"></script>
 <script src="@Url.Content("~/signalr/hubs")"></script>
 
-<script language="javascript">
-    var hub = $.connection.productHub;
-    var hubStart = $.connection.hub.start();
 
-    hub.client.rebind = function () {
-        var $grid = $("#Grid").data('kendoGrid');
-
-        if ($grid) $grid.dataSource.read();
-    }
-
-    hub.client.showMessage = function (message) {
-        console.log(message);
-    }
-
-
-    ////////////////////////////////////////////////
-    function onPush(e) {
-        var notification = $("#notification").data("kendoNotification");
-        notification.success(e.type);
-
-        if(e.type === "create") {
-            // Sort grid programmatically
-            // http://www.telerik.com/forums/sorting-a-grid-programmatically
-            var $grid = $("#Grid").data("kendoGrid");
-            var dataSource = $grid.dataSource;
-            dataSource.sort(dataSource._sort);
-        }
-    }
-    
-</script>
 
 @(Html.Kendo().Notification()
       .Name("notification")
@@ -66,6 +37,12 @@
     .Sortable()
     .Scrollable()
     .Filterable()
+    //.Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+    .Selectable(selectable =>
+    {
+        selectable.Mode(GridSelectionMode.Single);
+        selectable.Type(GridSelectionType.Row);
+    })
     .Pageable(pageable => pageable.Refresh(true))
     .DataSource(dataSource => dataSource
         .SignalR()
@@ -104,6 +81,11 @@
             })
         )
     )
+    //.Events(events =>
+    //{
+    //    events.DataBinding("gridOnDatabind");
+    //})
+
 )
 
 <br />
@@ -120,3 +102,59 @@
         <li>Create, update or destroy grid items.</li>
     </ol>
 </div>
+
+<script language="javascript">
+    var hub = $.connection.productHub;
+    var hubStart = $.connection.hub.start();
+    var $grid;
+
+    $(function () {
+        $grid = $("#Grid").data('kendoGrid');
+
+        $grid.bind("dataBinding", function (e) {
+            // Check if a filter menu is open. If so, prevent binding, for binding will interfere with everyting typed in the filter
+            // http://www.telerik.com/forums/prevent-kendo-grid-data-bind-events-when-updating-multiple-model-properties
+            var $filtermenu = $(".k-filter-menu");
+            if ($filtermenu.length > 0) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    hub.client.showMessage = function (message) {
+        console.log(message);
+    }
+
+
+    ////////////////////////////////////////////////
+    function onPush(e) {
+        //var notification = $("#notification").data("kendoNotification");
+        //notification.success(e.type);
+
+        var dataSource = $grid.dataSource;
+
+        // Check if a filter menu is open. If so, prevent binding, for binding will interfere with everyting typed in the filter
+        var $filtermenu = $(".k-filter-menu");
+        if ($filtermenu.length > 0) {
+            return; // prevent create
+        }
+
+        if (e.type === "create") {
+            // Sort grid programmatically
+            // http://www.telerik.com/forums/sorting-a-grid-programmatically
+
+            dataSource.sort(dataSource._sort);
+        }
+    }
+
+    //function gridOnDatabind(e) {
+    //    console.log("Bind");
+
+    //    // Check if a filter menu is open. If so, prevent binding, for binding will interfere with everyting typed in the filter
+    //    var $filterbox = $(".k-filter-menu");
+    //    if ($filterbox.length > 0) {
+    //        e.preventDefault();
+    //    }
+    //}
+
+</script>

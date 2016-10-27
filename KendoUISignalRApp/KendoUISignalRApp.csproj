@@ -593,6 +593,7 @@
     <Content Include="Models\EF.Reverse.POCO.Core.ttinclude">
       <DependentUpon>SampleDataContext.tt</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\KendoUISignalRApp.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Models\EF.Reverse.POCO.ttinclude">
       <DependentUpon>SampleDataContext.tt</DependentUpon>
@@ -937,7 +938,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>11367</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:11367/</IISUrl>
+          <IISUrl>http://eal-ftm:11367/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

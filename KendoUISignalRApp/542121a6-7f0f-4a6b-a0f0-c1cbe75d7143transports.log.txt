@@ -1,0 +1,7 @@
+SignalR.Transports.TransportHeartBeat Information: 0 : Connection 9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3 is New.
+SignalR.Transports.WebSocketTransport Information: 0 : CloseSocket(9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3)
+SignalR.Transports.WebSocketTransport Information: 0 : Abort(9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3)
+SignalR.Transports.TransportHeartBeat Information: 0 : Removing connection 9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3
+SignalR.Transports.WebSocketTransport Information: 0 : End(9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3)
+SignalR.Transports.WebSocketTransport Verbose: 0 : DrainWrites(9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3)
+SignalR.Transports.WebSocketTransport Information: 0 : CompleteRequest (9b9c739c-b3a3-49fa-a1c7-1d1d24f7f3e3)
